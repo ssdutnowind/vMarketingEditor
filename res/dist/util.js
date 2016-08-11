@@ -111,15 +111,25 @@ $(function () {
          * @param onOk
          * @param onCancel
          */
-        showAlert: function(msg, onOk, onCancel){
+        showAlert: function (msg, onOk, onCancel) {
             var $dialog = $('#dialog');
-            if(typeof onCancel === 'function'){
+            if (typeof onCancel === 'function') {
                 $dialog.find('#cancelButton').show();
-                $dialog.find('#cancelButton').unbind().bind('click', onCancel);
-            }else {
+                $dialog.find('#cancelButton').unbind().bind('click', function () {
+                    $dialog.hide();
+                    if (typeof onCancel === 'function') {
+                        onCancel();
+                    }
+                });
+            } else {
                 $dialog.find('#cancelButton').hide();
             }
-            $dialog.find('#okButton').unbind().bind('click', onOk);
+            $dialog.find('#okButton').unbind().bind('click', function () {
+                $dialog.hide();
+                if (typeof onOk === 'function') {
+                    onOk();
+                }
+            });
             $dialog.find('#dialogMessage').text(msg);
 
             $dialog.show();

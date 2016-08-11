@@ -89,7 +89,7 @@ var EDITOR_CONFIG = {
                     exports: 'shareIcon.jpg',
                     default: '',
                     extra: {
-                        type: 'jpg',
+                        suffix: '.jpg',
                         maxSize: 100 * 1024
                     }
                 },
@@ -471,7 +471,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'bg_kb.jpg',
                     extra: {
-                        type: '.jpg',
+                        suffix: '.jpg',
                         maxSize: 200 * 1024
                     },
                     relevance: {
@@ -489,7 +489,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'bg_lx.jpg',
                     extra: {
-                        type: '.jpg',
+                        suffix: '.jpg',
                         maxSize: 200 * 1024
                     },
                     relevance: {
@@ -507,7 +507,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'bg_lyh.jpg',
                     extra: {
-                        type: '.jpg',
+                        suffix: '.jpg',
                         maxSize: 200 * 1024
                     },
                     relevance: {
@@ -525,7 +525,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'bg_yq.jpg',
                     extra: {
-                        type: '.jpg',
+                        suffix: '.jpg',
                         maxSize: 200 * 1024
                     },
                     relevance: {
@@ -543,7 +543,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'bg_yq2.jpg',
                     extra: {
-                        type: '.jpg',
+                        suffix: '.jpg',
                         maxSize: 200 * 1024
                     },
                     relevance: {
@@ -567,7 +567,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'card_after.png',
                     extra: {
-                        type: '.png',
+                        suffix: '.png',
                         maxSize: 100 * 1024
                     },
                     relevance: {
@@ -585,7 +585,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'card_already.png',
                     extra: {
-                        type: '.png',
+                        suffix: '.png',
                         maxSize: 100 * 1024
                     },
                     relevance: {
@@ -603,7 +603,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'card_before.png',
                     extra: {
-                        type: '.png',
+                        suffix: '.png',
                         maxSize: 100 * 1024
                     },
                     relevance: {
@@ -621,7 +621,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'card_old.png',
                     extra: {
-                        type: '.png',
+                        suffix: '.png',
                         maxSize: 100 * 1024
                     },
                     relevance: {
@@ -639,7 +639,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'card_violate.png',
                     extra: {
-                        type: '.png',
+                        suffix: '.png',
                         maxSize: 100 * 1024
                     },
                     relevance: {
@@ -825,7 +825,7 @@ var EDITOR_CONFIG = {
                     type: 'Image',
                     exports: 'icon_right.png',
                     extra: {
-                        type: '.png',
+                        suffix: '.png',
                         maxSize: 200 * 1024
                     },
                     relevance: {

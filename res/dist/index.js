@@ -18,7 +18,7 @@ $(function () {
             e.preventDefault();
 
             // Give a visual indication this element is a drop target.
-            el_.classList.add('dropping');
+            el_.classList.add('callout-success');
         };
 
         this.dragover = function (e) {
@@ -29,14 +29,14 @@ $(function () {
         this.dragleave = function (e) {
             e.stopPropagation();
             e.preventDefault();
-            el_.classList.remove('dropping');
+            el_.classList.remove('callout-success');
         };
 
         this.drop = function (e) {
             e.stopPropagation();
             e.preventDefault();
 
-            el_.classList.remove('dropping');
+            el_.classList.remove('callout-success');
 
             onDropCallback(e.dataTransfer.files);
         };
@@ -47,10 +47,11 @@ $(function () {
         el_.addEventListener('drop', this.drop, false);
     }
 
+
     var items = [];
 
     function init() {
-        // 生成编辑界面
+        // 鐢熸垚缂栬緫鐣岄潰
 
         var containerTpl = '<div class="box box-primary">' +
             '    <div class="box-header with-border">' +
@@ -95,15 +96,15 @@ $(function () {
             $('#formContainer').append($group);
         }
 
-        //// 处理拖拽区域
-        //var controller = new DnDFileController('#dragArea', function (files) {
-        //    [].forEach.call(files, function (file, i) {
-        //        // writeFile(FS.root, file);
-        //        console.log(file);
-        //        $('#g02_i04')[0].files.push(file);
-        //    });
-        //});
-
+        // 澶勭悊鎷栨嫿鍖哄煙
+        var controller = new DnDFileController('#dragArea', function (files) {
+            [].forEach.call(files, function (file, i) {
+                // writeFile(FS.root, file);
+                Util.showAlert('鎷栨斁鐨勬枃浠跺皢瑕嗙洊鐜版湁閰嶇疆涓殑鏂囦欢锛屾槸鍚︾户缁紵', function(){
+                    console.log(file);
+                });
+            });
+        });
     }
 
 

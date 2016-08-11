@@ -140,6 +140,8 @@ var FormItems = {
         // 类型
         this.type = 'Image';
         this.config = config;
+        this.maxSize = config.extra && config.extra.maxSize || 1024 * 1024;
+        this.suffix = config.extra && config.extra.suffix || '';
 
         // 模板
         this.tpl = '<div class="form-group">' +
@@ -147,7 +149,7 @@ var FormItems = {
             '    <div class="col-md-8">' +
             '        <input type="file" class="form-control" id="<%- groupId + \'_\' + itemId %>" placeholder="<%- itemLabel %>">' +
             '        <p class="help-block"><%- itemDesc %></p>' +
-            '        <img class="img-thumbnail" style="max-width: 320px; display: none;">'+
+            '        <img class="img-thumbnail" style="max-width: 320px; display: none;">' +
             '    </div>' +
             '</div>';
         this.value = null;
@@ -161,7 +163,7 @@ var FormItems = {
 
         };
 
-        function setPreview(file){
+        function setPreview(file) {
             var reader = new FileReader();
             reader.onloadend = function () {
                 that.$el.find('img').attr('src', reader.result);
@@ -180,8 +182,21 @@ var FormItems = {
         this.$el = $(html);
         this.$inputEl = this.$el.find('input');
 
-        this.$inputEl.bind('change', function(){
-            var file  = this.files[0];
+        this.$inputEl.bind('change', function () {
+            var file = this.files[0];
+            // 检查文件类型
+            if (that.suffix) {
+                if (file.name.toLowerCase().lastIndexOf(that.suffix) !== file.name.lastIndexOf('.')) {
+                    Util.showAlert('请选择“' + that.suffix + '”类型的文件！');
+                    return;
+                }
+            }
+            // 检查文件大小
+            if (file.size > that.maxSize) {
+                Util.showAlert('文件体积不能大于 ' + (that.maxSize / 1024) + 'KB！');
+                return;
+            }
+
             setPreview(file);
         });
 
