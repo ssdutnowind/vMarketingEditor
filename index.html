@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>病毒营销模板工具</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="res/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="res/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="res/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="res/css/skins/skin-blue.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="res/plugins/iCheck/flat/blue.css">
+
+    <style>
+        body, input, select, textarea {
+            font-family: "微软雅黑", "Microsoft YaHei", "宋体", "SimSun";
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">病毒</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">病毒营销模板工具</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="res/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>Alexander Pierce</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li><a href="#"><i class="fa fa-edit text-red"></i> <span>模板管理</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>// TODO</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>// TODO</span></a></li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                模板管理
+                <small>配置病毒营销主题包</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <button class="btn btn-sm btn-default">导入模板</button>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <i class="fa fa-info"></i>
+
+                            <h3 class="box-title">提示</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <blockquote>
+                                <p><span class="label label-default">导入模板</span> 可以将之前保存的模板导入到该项目中继续编辑。</p>
+
+                                <p><span class="label label-info">保存模板</span> 可以将当前编辑内容保存为模板包保存到本地以便以后继续编辑。</p>
+
+                                <p><span class="label label-primary">生成主题包</span>
+                                    可以将当前编辑内容生成为zip格式病毒营销主题包，最终使用管理平台推送到服务器上。</p>
+
+                                <p><span class="label label-warning">重置</span> 可以将当前所有配置重置为默认值。</p>
+                            </blockquote>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12" id="formContainer">
+
+                </div>
+                <!--/.col (left) -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+
+<div class="modal" id="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p id="dialogMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelButton" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                <button type="button" id="okButton" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<!-- jQuery 2.2.0 -->
+<script src="res/plugins/jQuery/jQuery-2.2.0.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="res/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="res/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="res/dist/app.min.js"></script>
+<script src="res/dist/config.js"></script>
+<script src="res/dist/util.js"></script>
+<script src="res/dist/fs.js"></script>
+<script src="res/dist/types.js"></script>
+<script src="res/dist/index.js"></script>
+</body>
