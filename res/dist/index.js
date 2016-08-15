@@ -50,7 +50,7 @@ $(function () {
 
     var items = [];
 
-    function init() {
+    function initPage() {
         // 生成编辑界面
 
         var containerTpl = '<div class="box box-primary">' +
@@ -89,25 +89,52 @@ $(function () {
                         items.push(new FormItems.ItemImage(item, $box));
                         break;
                     case 'css':
-
+                        items.push(new FormItems.ItemCss(item, $box));
                         break;
                 }
             }
             $('#formContainer').append($group);
         }
+    }
 
+    function initEvent() {
         // 处理拖拽区域
         var controller = new DnDFileController('#dragArea', function (files) {
-            [].forEach.call(files, function (file, i) {
-                // writeFile(FS.root, file);
-                Util.showAlert('拖放的文件将覆盖现有配置中的文件，是否继续？', function(){
+            Util.showAlert('拖放的文件将覆盖现有配置中的文件，是否继续？', function () {
+                [].forEach.call(files, function (file, i) {
+                    // writeFile(FS.root, file);
+
                     console.log(file);
+                    for (var i = 0; i < items.length; i++) {
+                        if (items[i].type === 'Image' && items[i].exports === file.name) {
+                            items[i].setValue(file);
+                        }
+                    }
                 });
             });
         });
+
+        $('#buttonSave').bind('click', doSave);
     }
 
 
-    init();
+    function doSave() {
+        var validate = true;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].validate() === false) {
+                validate = false;
+            }
+        }
+
+        if (!validate) {
+            Util.showAlert('请检查各项配置！');
+            return;
+        }
+    }
+
+
+    initPage();
+
+    initEvent();
 
 });

@@ -10,10 +10,16 @@ var FormItems = {
         // 类型
         this.type = 'String';
         this.config = config;
+        this.exports = config.exports;
+        this.must = this.config.extra && this.config.extra.must || false;
 
         // 模板
         this.tpl = '<div class="form-group">' +
-            '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %></label>' +
+            '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %>' +
+            '    <% if(extra && extra.must) { %>' +
+            '    <span class="must">*</span>' +
+            '    <% } %>' +
+            '    </label>' +
             '    <div class="col-md-8">' +
             '        <input type="text" class="form-control" id="<%- groupId + \'_\' + itemId %>" placeholder="<%- itemLabel %>">' +
             '        <p class="help-block"><%- itemDesc %></p>' +
@@ -22,11 +28,23 @@ var FormItems = {
         this.value = null;
 
         this.setValue = function (val) {
-
+            this.value = val;
+            this.$inputEl.val(val);
         };
 
-        this.getValue = function (val) {
+        this.getValue = function () {
+            this.value = this.$inputEl.val();
+            return this.value;
+        };
 
+        this.validate = function () {
+            if (this.must && !this.getValue()) {
+                this.$el.addClass('has-error');
+                return false;
+            } else {
+                this.$el.removeClass('has-error');
+                return true;
+            }
         };
 
         // 生成DOM
@@ -52,9 +70,14 @@ var FormItems = {
         // 类型
         this.type = 'Array';
         this.config = config;
+        this.exports = config.exports;
         // 模板
         this.tpl = '<div class="form-group">' +
-            '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %></label>' +
+            '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %>' +
+            '    <% if(extra && extra.must) { %>' +
+            '    <span class="must">*</span>' +
+            '    <% } %>' +
+            '    </label>' +
             '    <div class="col-md-8">' +
             '        <textarea class="form-control" id="<%- groupId + \'_\' + itemId %>" placeholder="<%- itemLabel %>" rows="5" style="resize: vertical"></textarea>' +
             '        <p class="help-block"><%- itemDesc %></p>' +
@@ -63,11 +86,23 @@ var FormItems = {
         this.value = null;
 
         this.setValue = function (val) {
-
+            this.value = val;
+            this.$inputEl.val(this.value.join('\r\n'));
         };
 
         this.getValue = function (val) {
+            this.value = this.$inputEl.val().split('\r\n');
+            return this.value;
+        };
 
+        this.validate = function () {
+            if (this.must && !this.getValue()) {
+                this.$el.addClass('has-error');
+                return false;
+            } else {
+                this.$el.removeClass('has-error');
+                return true;
+            }
         };
 
         // 生成DOM
@@ -93,9 +128,14 @@ var FormItems = {
         // 类型
         this.type = 'Select';
         this.config = config;
+        this.exports = config.exports;
         // 模板
         this.tpl = '<div class="form-group">' +
-            '    <label for="<%- groupId + \'_\' + itemId + \'_0\' %>" class="col-md-3 control-label"><%- itemLabel %></label>' +
+            '    <label for="<%- groupId + \'_\' + itemId + \'_0\' %>" class="col-md-3 control-label"><%- itemLabel %>' +
+            '    <% if(extra && extra.must) { %>' +
+            '    <span class="must">*</span>' +
+            '    <% } %>' +
+            '    </label>' +
             '    <div class="col-md-8">' +
             '        <% for(var i = 0; i < options.length; i++) { %>' +
             '        <label class="radio-inline">' +
@@ -113,6 +153,10 @@ var FormItems = {
 
         this.getValue = function (val) {
 
+        };
+
+        this.validate = function () {
+            return true;
         };
 
         // 生成DOM
@@ -142,10 +186,15 @@ var FormItems = {
         this.config = config;
         this.maxSize = config.extra && config.extra.maxSize || 1024 * 1024;
         this.suffix = config.extra && config.extra.suffix || '';
+        this.exports = config.exports;
 
         // 模板
         this.tpl = '<div class="form-group">' +
-            '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %></label>' +
+            '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %>' +
+            '    <% if(extra && extra.must) { %>' +
+            '    <span class="must">*</span>' +
+            '    <% } %>' +
+            '    </label>' +
             '    <div class="col-md-8">' +
             '        <input type="file" class="form-control" id="<%- groupId + \'_\' + itemId %>" placeholder="<%- itemLabel %>">' +
             '        <p class="help-block"><%- itemDesc %></p>' +
@@ -154,13 +203,29 @@ var FormItems = {
             '</div>';
         this.value = null;
 
-        this.setValue = function (val) {
-            this.value = val;
-            setPreview(val);
+        this.setValue = function (file) {
+            // 检查文件类型
+            if (that.suffix) {
+                if (file.name.toLowerCase().lastIndexOf(that.suffix) !== file.name.lastIndexOf('.')) {
+                    Util.showAlert('请选择“' + that.suffix + '”类型的文件！');
+                    return;
+                }
+            }
+            // 检查文件大小
+            if (file.size > that.maxSize) {
+                Util.showAlert('文件体积不能大于 ' + (that.maxSize / 1024) + 'KB！');
+                return;
+            }
+            this.value = file;
+            setPreview(file);
         };
 
         this.getValue = function (val) {
 
+        };
+
+        this.validate = function () {
+            return true;
         };
 
         function setPreview(file) {
@@ -214,8 +279,25 @@ var FormItems = {
         "use strict";
         // 类型
         this.type = 'CSS';
+        this.config = config;
+        this.exports = config.exports;
         // 模板
-        this.tpl = '';
+        this.tpl = '<div class="form-group">' +
+            '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %>' +
+            '    <% if(extra && extra.must) { %>' +
+            '    <span class="must">*</span>' +
+            '    <% } %>' +
+            '    </label>' +
+            '    <div class="col-md-3">' +
+            '        <div class="input-group color-picker">' +
+            '            <input type="text" class="form-control" id="<%- groupId + \'_\' + itemId %>" placeholder="<%- itemLabel %>">' +
+            '            <div class="input-group-addon">' +
+            '                <i></i>' +
+            '            </div>' +
+            '        </div>' +
+            '        <p class="help-block"><%- itemDesc %></p>' +
+            '    </div>' +
+            '</div>';
         this.value = null;
 
         this.setValue = function (val) {
@@ -225,5 +307,22 @@ var FormItems = {
         this.getValue = function (val) {
 
         };
+
+        this.validate = function () {
+            return true;
+        };
+
+        // 生成DOM
+        var html = Util.template(this.tpl, this.config);
+        this.$el = $(html);
+        this.$inputEl = this.$el.find('input');
+
+        if (this.config.default) {
+            this.$inputEl.val(this.config.default);
+        }
+
+        $container.append(this.$el);
+
+        this.$el.find('.color-picker').colorpicker();
     }
 };

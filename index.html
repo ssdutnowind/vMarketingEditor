@@ -17,10 +17,15 @@
     <link rel="stylesheet" href="res/css/skins/skin-blue.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="res/plugins/iCheck/flat/blue.css">
-
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="res/plugins/colorpicker/bootstrap-colorpicker.min.css">
     <style>
         body, input, select, textarea {
             font-family: "微软雅黑", "Microsoft YaHei", "宋体", "SimSun";
+        }
+
+        .must {
+            color: #d9534f;
         }
     </style>
 </head>
@@ -80,38 +85,12 @@
             <ol class="breadcrumb">
                 <li>
                     <button class="btn btn-sm btn-default">导入模板</button>
+                    <button class="btn btn-sm btn-default">从网络拉取模板</button>
                 </li>
             </ol>
         </section>
 
-        <!-- Main content -->
         <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <i class="fa fa-info"></i>
-
-                            <h3 class="box-title">提示</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <blockquote>
-                                <p><span class="label label-default">导入模板</span> 可以将之前保存的模板导入到该项目中继续编辑。</p>
-
-                                <p><span class="label label-info">保存模板</span> 可以将当前编辑内容保存为模板包保存到本地以便以后继续编辑。</p>
-
-                                <p><span class="label label-primary">生成主题包</span>
-                                    可以将当前编辑内容生成为zip格式病毒营销主题包，最终使用管理平台推送到服务器上。</p>
-
-                                <p><span class="label label-warning">重置</span> 可以将当前所有配置重置为默认值。</p>
-                            </blockquote>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="callout callout-info" id="dragArea">
@@ -122,15 +101,23 @@
             </div>
 
             <div class="row">
-                <!-- left column -->
                 <div class="col-md-12" id="formContainer">
 
                 </div>
-                <!--/.col (left) -->
+
             </div>
-            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button class="btn btn-warning" id="buttonReset">重置配置</button>
+                            <button class="btn btn-info" id="buttonSave">保存配置</button>
+                            <button class="btn btn-primary" id="buttonExport">导出配置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- /.content -->
     </div>
 </div>
 
@@ -144,7 +131,8 @@
                 <p id="dialogMessage"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="cancelButton" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                <button type="button" id="cancelButton" class="btn btn-default pull-left" data-dismiss="modal">取消
+                </button>
                 <button type="button" id="okButton" class="btn btn-primary">确定</button>
             </div>
         </div>
@@ -155,6 +143,8 @@
 <script src="res/plugins/jQuery/jQuery-2.2.0.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="res/bootstrap/js/bootstrap.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="res/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 <!-- FastClick -->
 <script src="res/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
