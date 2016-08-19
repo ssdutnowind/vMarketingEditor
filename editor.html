@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>病毒营销模板工具</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="res/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="res/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="res/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="res/css/skins/skin-blue.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="res/plugins/iCheck/flat/blue.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="res/plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <style>
+        body, input, select, textarea {
+            font-family: "微软雅黑", "Microsoft YaHei", "宋体", "SimSun";
+        }
+
+        .must {
+            color: #d9534f;
+        }
+
+        .up-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 60px;
+        }
+
+        .down-to-bottom {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        .preview-block {
+            width: 426px;
+            height: 828px;
+            margin: 0 auto;
+            padding: 195px 0 0 53px;
+            background-image: url("res/dist/img/mobile.png");
+            box-sizing: border-box;
+        }
+
+        .preview-window {
+            width: 320px;
+            height: 505px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .preview-window::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .preview-window::-webkit-scrollbar-track-piece {
+            background-color: #eee;
+            margin: -2px;
+        }
+
+        .preview-window::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            min-height: 150px;
+            min-width: 150px;
+            border-radius: 10px;
+        }
+
+        .preview-window::-webkit-scrollbar-thumb:vertical:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .preview-window::-webkit-scrollbar-thumb:horizontal:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .preview-frame {
+            width: 320px;
+            height: 505px;
+            border: none;
+            background-color: #DDDDDD;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">病毒</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">病毒营销模板工具</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="res/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>Alexander Pierce</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li><a href="#"><i class="fa fa-edit text-red"></i> <span>模板管理（TODO）</span></a></li>
+                <li class="active"><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>模板编辑</span></a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>配置管理（TODO）</span></a></li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                模板管理
+                <small>配置病毒营销主题包</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <button class="btn btn-sm btn-default" id="buttonImport">
+                        <i class="fa fa-file-zip-o"></i> 导入模板
+                    </button>
+                    <button class="btn btn-sm btn-default" id="buttonNetwork" disabled>
+                        <i class="fa fa-cloud-download"></i> 从网络拉取模板
+                    </button>
+                </li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="callout callout-info" id="dragArea">
+                        <h4>拖放提示</h4>
+                        <p>试试直接将图片文件拖放到该区域！</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" id="formContainer">
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button class="btn btn-success" id="buttonPreview"><i class="fa fa-eye"></i> 预览</button>
+                            <button class="btn btn-warning" id="buttonReset"><i class="fa fa-refresh"></i> 重置配置</button>
+                            <button class="btn btn-info" id="buttonSave"><i class="fa fa-save"></i> 保存配置</button>
+                            <button class="btn btn-primary" id="buttonExport"><i class="fa fa-share-square-o"></i> 导出配置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<button class="btn btn-default up-to-top"><i class="fa fa-arrow-up"></i></button>
+<button class="btn btn-default down-to-bottom"><i class="fa fa-arrow-down"></i></button>
+
+<!-- 导入对话框 -->
+<div class="modal" id="importDialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="buttonCloseImport">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">选择导入的zip包</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="file" id="importThemeFile" class="form-control">
+                    <p class="help-block">只能支持导入本工具导出的配置包，导入其它文件可能导致未知问题。</p>
+                    <p class="help-block">出现问题后建议“重置配置”后再继续操作。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="buttonDoImport" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 从网络拉取对话框 -->
+<div class="modal" id="networkDialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="buttonCloseNetwork">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">输入存放配置文件的路径</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="importNetworkPath" class="form-control"
+                           value="http://wallet.95516.com/s/wl/web/activity/vMarketing2/theme/">
+                    <p class="help-block">直接指定到theme目录。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="buttonDoNetwork" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 进度对话框 -->
+<div class="modal" id="progress">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="progress active">
+                    <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    </div>
+                </div>
+                <p style="text-align: center;" id="progressMessage">加载中……</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="previewDialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs pull-right">
+                    <li>
+                        <button type="button" class="close" id="buttonClosePreview">
+                            &nbsp;<span aria-hidden="true">×</span>&nbsp;
+                        </button>
+                    </li>
+                    <li class="active"><a href="#tab_1" data-toggle="tab">社交（新）</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">社交（老）</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">拉新</a></li>
+                    <li><a href="#tab_4" data-toggle="tab">邀请</a></li>
+                    <li class="pull-left header"><i class="fa fa-eye"></i> 预览</li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="preview-block">
+                            <div class="preview-window">
+                                <iframe class="preview-frame"
+                                        src="res/preview/html/snsIndex.html?user=new"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        <div class="preview-block">
+                            <div class="preview-window">
+                                <iframe class="preview-frame"
+                                        src="res/preview/html/snsIndex.html?user=old"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_3">
+                        <div class="preview-block">
+                            <div class="preview-window">
+                                <iframe class="preview-frame"
+                                        src="res/preview/html/appIndex.html?user=already"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_4">
+                        <div class="preview-block">
+                            <div class="preview-window">
+                                <iframe class="preview-frame"
+                                        src="res/preview/html/inviteIndex.html?user=old"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提示信息对话框 -->
+<div class="modal" id="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p id="dialogMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelButton" class="btn btn-default pull-left" data-dismiss="modal">取消
+                </button>
+                <button type="button" id="okButton" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery 2.2.0 -->
+<script src="res/plugins/jQuery/jQuery-2.2.0.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="res/bootstrap/js/bootstrap.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="res/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- FastClick -->
+<script src="res/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="res/dist/app.min.js"></script>
+<!-- zip.js -->
+<script src="res/plugins/zip/zip.js"></script>
+<script src="res/plugins/zip/zip-fs.js"></script>
+<script src="res/plugins/zip/zip-ext.js"></script>
+<script src="res/dist/config.js"></script>
+<script src="res/dist/util.js"></script>
+<script src="res/dist/fs.js"></script>
+<script src="res/dist/types.js"></script>
+<script src="res/dist/editor.js"></script>
+</body>

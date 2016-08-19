@@ -1,0 +1,39 @@
+<script type="text/html">
+    <div class="container bg-yq">
+        <div class="invite-placeholder">
+
+        </div>
+        <div id="endNote" class="dn">
+            <!-- 提示：活动结束 -->
+            <div class="invite-end-big"><%- activityStopTitle %></div>
+            <div class="invite-end-small"><%- activityStopDesc %></div>
+            <!-- 按钮：我要邀请 -->
+            <a id="endCheck" class="button-action">查看我的奖励</a>
+        </div>
+        <div id="descBlock">
+            <!-- 按钮：我要邀请 -->
+            <div id="buttonInviteContainer" class="dn">
+                <button id="buttonInvite" class="button-large">我要邀请</button>
+            </div>
+            <p class="apple-text"><%- appleTip %></p>
+            <!-- 奖励说明 -->
+            <div class="activity-invite-block">
+                <div class="activity-invite-title"><%- inviteRuleTitle %></div>
+                <% for(var i = 0, len = inviteRuleContent.length; i < len; i++) { %>
+                <p>
+                    <span class="activity-invite-mark"><%- (i + 1) %></span>
+                    <%- inviteRuleContent[i] %>
+                </p>
+                <% } %>
+            </div>
+        </div>
+        <div id="inCheckContainer" class="dn">
+            <a id="inCheck" class="button-action">查看我的奖励</a>
+        </div>
+        <!-- 链接：跳转到邀请活动细则 -->
+        <div class="link-block text-center">
+            <!-- 活动细则 -->
+            <span class="icon-rule"></span><span>我已阅读并同意<a href="#activityRuleInvite">活动细则</a></span>
+        </div>
+    </div>
+</script>

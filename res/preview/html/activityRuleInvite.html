@@ -1,0 +1,38 @@
+<script type="text/html">
+    <div class="container bg-kb">
+        <div class="blank-placeholder">
+
+        </div>
+        <div class="activity-block">
+            <div class="activity-title"><%- ruleInviteTitle %></div>
+            <div class="activity-body">
+
+                <!-- 活动主题 -->
+                <p class="activity-content"><%- ruleInviteTopic %></p>
+
+                <!-- 活动时间 -->
+                <h1>◆&nbsp;活动时间</h1>
+
+                <p class="activity-content"><%- ruleInviteTime %></p>
+
+                <!-- 奖励说明 -->
+                <h1>◆&nbsp;奖励说明</h1>
+                <% for(var i = 0, len = ruleInviteGiftDesc.length; i < len; i++) { %>
+                <p class="activity-content"><%- ruleInviteGiftDesc[i] %></p>
+                <% } %>
+                <img class="image-100" src="../img/ruleInvite_01.jpg?rev=@@hash">
+
+                <!-- 活动说明 -->
+                <h1>◆&nbsp;活动规则</h1>
+                <% for(var i = 0, len = ruleInviteRule.length; i < len; i++) { %>
+                <p class="activity-content"><%- ruleInviteRule[i] %></p>
+                <% } %>
+                <!-- 违规说明 -->
+                <h1>◆&nbsp;活动说明</h1>
+                <% for(var i = 0, len = ruleInviteDesc.length; i < len; i++) { %>
+                <p class="activity-content"><%- ruleInviteDesc[i] %></p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</script>

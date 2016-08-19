@@ -1,0 +1,116 @@
+<script type="text/html">
+    <a class="scan-block dn" id="buttonShowQRCode">
+        <span>扫二维码分享</span>
+    </a>
+
+    <div id="giftBlock" class="container bg-lx dn">
+        <!-- 中部卡片 -->
+        <div class="card-placeholder">
+            <div class="card-block card-before">
+
+            </div>
+        </div>
+        <!-- 手机号输入框 -->
+        <div class="input-block">
+            <input class="input-mobile" placeholder="请输入您的真实手机号" id="inputMobile" maxlength="11">
+        </div>
+        <!-- 领取按钮 -->
+        <div class="button-block">
+            <button class="button-large" id="buttonGift"><%- snsGiftButtonTitle %></button>
+        </div>
+        <div class="link-block clearfix">
+            <span class="pull-right">我已阅读并同意<a href="#activityRuleNew">活动细则</a></span>
+            <span class="icon-rule pull-right"></span>
+        </div>
+    </div>
+
+    <!-- 输入验证码 -->
+    <div id="captchaBlock" class="captcha-mask dn">
+        <div class="captcha-block">
+            <div class="captcha-block-top">
+                <div class="captcha-title">手机号码验证</div>
+                <div class="captcha-input-block">
+                    <input id="captchaInput" class="input-captcha" placeholder="验证码" maxlength="6">
+
+                    <a class="captcha-text" id="buttonCaptchaGet">获取验证码</a>
+                    <span class="captcha-text" id="captchaSecond" style="display: none"></span>
+                </div>
+            </div>
+            <div class="captcha-block-bottom">
+                <p><%- captchaTitle %></p>
+                <button class="button-large" id="buttonSubmit" disabled>提交</button>
+                <p><%- captchaTip %></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 领奖结果页面 -->
+    <div id="resultBlock" class="container bg-lx dn">
+        <!-- 中部卡片 -->
+        <div class="card-placeholder">
+            <!-- 领奖成功 -->
+            <div class="card-block card-after dn">
+            </div>
+            <!-- 已经领过 -->
+            <div class="card-block card-already dn">
+            </div>
+        </div>
+        <!-- 按钮 -->
+        <a class="button-large" id="buttonGotoWallet"
+           href="http://a.app.qq.com/o/simple.jsp?pkgname=com.unionpay">去银联钱包查看</a>
+
+        <!-- 活动细则 -->
+        <div class="link-block center">
+            <div class="text-center">
+                详见<a href="#activityRuleNew">活动细则</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 老用户邀请 -->
+    <div id="inviteBlock" class="container bg-lyh dn">
+        <div class="lyh-placeholder">
+
+        </div>
+        <div class="button-block">
+            <button class="button-large" id="buttonInvite">我要邀请</button>
+        </div>
+        <p class="apple-text"><%- appleTip %></p>
+        <!-- 奖励说明 -->
+        <div class="activity-invite-block">
+            <div class="activity-invite-title"><%- inviteRuleTitle %></div>
+            <% for(var i = 0, len = inviteRuleContent.length; i < len; i++) { %>
+            <p>
+                <span class="activity-invite-mark"><%- (i + 1) %></span>
+                <%- inviteRuleContent[i] %>
+            </p>
+            <% } %>
+        </div>
+        <div class="link-block text-center">
+            <span class="icon-rule"></span><span>我已阅读并同意<a href="#activityRuleInvite">活动细则</a></span>
+        </div>
+    </div>
+
+    <!-- 分享蒙板 -->
+    <div id="shareMask" class="share-mask dn">
+        <div class="share-block">
+        </div>
+    </div>
+
+    <!-- 二维码 -->
+    <div id="qrCodeMask" class="qrCode-mask dn">
+        <div class="qrCode-block">
+            <div class="qrCode-block-top">
+                <div class="qrCode-close" id="buttonCloseQRCode">
+                    <img src="../img/close.png"/>
+                </div>
+
+                <div id="qrCodeContainer" class="qrCode-container"></div>
+            </div>
+            <div class="qrCode-block-bottom">
+                <p><%- scanTip %></p>
+            </div>
+
+        </div>
+    </div>
+</script>

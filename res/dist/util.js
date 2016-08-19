@@ -133,6 +133,18 @@ $(function () {
             $dialog.find('#dialogMessage').text(msg);
 
             $dialog.show();
+        },
+
+        showProgress: function(percent, msg){
+            var $progress = $('#progress');
+            percent = percent + '%';
+            $progress.find('.progress-bar').css('width', percent);
+            $progress.find('#progressMessage').text(msg || '加载中...');
+            $progress.show();
+        },
+
+        hideProgress: function(){
+            $('#progress').hide();
         }
     };
 });

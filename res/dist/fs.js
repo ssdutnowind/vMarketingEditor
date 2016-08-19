@@ -3,11 +3,11 @@ $(function () {
 
     var FS = window.FS = {
         /**
-         * ³õÊ¼»¯FileSystem
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
-         * @param type      ÀàĞÍ£¨TEMPORARY/PERSISTENT)
-         * @param size      ´óĞ¡£¨×Ö½ÚÊı£©
+         * åˆå§‹åŒ–FileSystem
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
+         * @param type      ç±»å‹ï¼ˆTEMPORARY/PERSISTENT)
+         * @param size      å¤§å°ï¼ˆå­—èŠ‚æ•°ï¼‰
          */
         initFileSystem: function (onSuccess, onError, type, size) {
             type = type || window.TEMPORARY;
@@ -17,11 +17,11 @@ $(function () {
         },
 
         /**
-         * ´´½¨Ä¿Â¼
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param path      ÎÄ¼şÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * åˆ›å»ºç›®å½•
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param path      æ–‡ä»¶è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         createFolder: function (rootDir, path, onSuccess, onError) {
             var folders = path;
@@ -29,24 +29,24 @@ $(function () {
                 path.replace('\\', '/');
                 folders = path.split('/');
             }
-            // Ò»²ã²ãµİ¹é
+            // ä¸€å±‚å±‚é€’å½’
             rootDir.getDirectory(folders[0], {create: true}, function (dirEntry) {
                 if (folders.length) {
-                    FS.createFolder(dirEntry, folders.slice(1), null, onError);
+                    FS.createFolder(dirEntry, folders.slice(1), onSuccess, onError);
                 } else {
                     if (typeof onSuccess === 'function') {
-                        onSuccess();
+                        onSuccess(rootDir);
                     }
                 }
             }, onError);
         },
 
         /**
-         * É¾³ıÄ¿Â¼
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param path      ÎÄ¼ş¼ĞÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * åˆ é™¤ç›®å½•
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param path      æ–‡ä»¶å¤¹è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         removeFolder: function (rootDir, path, onSuccess, onError) {
             rootDir.getDirectory(path, {}, function (dirEntry) {
@@ -59,11 +59,11 @@ $(function () {
         },
 
         /**
-         * ÁĞ³öÄ¿Â¼ÄÚÈİ
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param path      ÎÄ¼ş¼ĞÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * åˆ—å‡ºç›®å½•å†…å®¹
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param path      æ–‡ä»¶å¤¹è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         listFolder: function (rootDir, path, onSuccess, onError) {
             rootDir.getDirectory(path, {create: false}, function (dirEntry) {
@@ -88,12 +88,12 @@ $(function () {
         },
 
         /**
-         * ÒÆ¶¯Ä¿Â¼
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param src       Ô´Ä¿Â¼
-         * @param dest      Ä¿±êÄ¿Â¼
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * ç§»åŠ¨ç›®å½•
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param src       æºç›®å½•
+         * @param dest      ç›®æ ‡ç›®å½•
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         moveFolder: function (rootDir, src, dest, onSuccess, onError) {
             dest.replace('\\', '/');
@@ -108,11 +108,11 @@ $(function () {
         },
 
         /**
-         * É¾³ıÎÄ¼ş
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param path      ÎÄ¼şÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * åˆ é™¤æ–‡ä»¶
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param path      æ–‡ä»¶è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         removeFile: function (rootDir, path, onSuccess, onError) {
             rootDir.getFile(path, {}, function (fileEntry) {
@@ -127,28 +127,16 @@ $(function () {
         },
 
         /**
-         * Ğ´ÈëÎÄ¼ş
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param content   Ğ´ÈëÄÚÈİ£¨String/Blob/File£©
-         * @param path      ÎÄ¼şÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * å†™å…¥æ–‡ä»¶
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param content   å†™å…¥å†…å®¹ï¼ˆString/Blob/Fileï¼‰
+         * @param path      æ–‡ä»¶è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         writeFile: function (rootDir, content, path, onSuccess, onError) {
             rootDir.getFile(path, {create: true}, function (fileEntry) {
                 fileEntry.createWriter(function (fileWriter) {
-                    fileWriter.onwrite = function (e) {
-                        if (typeof onSuccess === 'function') {
-                            onSuccess(e);
-                        }
-                    };
-
-                    fileWriter.onerror = function (e) {
-                        if (typeof onError === 'function') {
-                            onError(e);
-                        }
-                    };
-
                     var type = content.toString(), file;
                     switch (type) {
                         case '[object Blob]':
@@ -158,19 +146,33 @@ $(function () {
                         default:
                             file = new Blob([content]);
                     }
+                    // fileWriter.seek(0);
+                    fileWriter.truncate(0);
+                    setTimeout(function(){
+                        fileWriter.onwriteend = function (e) {
+                            if (typeof onSuccess === 'function') {
+                                onSuccess(e);
+                            }
+                        };
 
-                    fileWriter.write(file);
+                        fileWriter.onerror = function (e) {
+                            if (typeof onError === 'function') {
+                                onError(e);
+                            }
+                        };
+                        fileWriter.write(file);
+                    }, 100);
                 }, onError);
             }, onError);
         },
 
         /**
-         * ´Ó·şÎñÆ÷Ö±½ÓÏÂÔØÎÄ¼şµ½FileSystem
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param url       ÎÄ¼şµÄ·şÎñÆ÷Â·¾¶
-         * @param path      ÎÄ¼şÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * ä»æœåŠ¡å™¨ç›´æ¥ä¸‹è½½æ–‡ä»¶åˆ°FileSystem
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param url       æ–‡ä»¶çš„æœåŠ¡å™¨è·¯å¾„
+         * @param path      æ–‡ä»¶è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         downloadFile: function (rootDir, url, path, onSuccess, onError) {
             var xhr = new XMLHttpRequest();
@@ -191,12 +193,12 @@ $(function () {
         },
 
         /**
-         * ¶ÁÈ¡ÎÄ¼şÄÚÈİ
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param path      ÎÄ¼şÂ·¾¶
-         * @param type      ¶ÁÈ¡ÀàĞÍ£¨arrayBuffer/dataUrl/binaryString/text£©
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * è¯»å–æ–‡ä»¶å†…å®¹
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param path      æ–‡ä»¶è·¯å¾„
+         * @param type      è¯»å–ç±»å‹ï¼ˆarrayBuffer/dataUrl/binaryString/textï¼‰
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         readFile: function (rootDir, path, type, onSuccess, onError) {
             type = type || 'text';
@@ -208,6 +210,7 @@ $(function () {
                             onSuccess(this.result);
                         }
                     };
+                    reader.onerror = onError;
 
                     switch (type.toLocaleString()) {
                         case 'arraybuffer':
@@ -229,7 +232,7 @@ $(function () {
         },
 
         /**
-         * ¿½±´ÎÄ¼ş
+         * æ‹·è´æ–‡ä»¶
          * @param rootDir
          * @param src
          * @param dest
@@ -246,12 +249,12 @@ $(function () {
         },
 
         /**
-         * ÒÆ¶¯ÎÄ¼ş
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param src       Ô´Â·¾¶
-         * @param dest      Ä¿±êÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * ç§»åŠ¨æ–‡ä»¶
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param src       æºè·¯å¾„
+         * @param dest      ç›®æ ‡è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         moveFile: function (rootDir, src, dest, onSuccess, onError) {
             dest.replace('\\', '/');
@@ -266,11 +269,11 @@ $(function () {
         },
 
         /**
-         * »ñÈ¡ÎÄ¼şµÄFileSystem URL
-         * @param rootDir   FileSystem¸ú¶ÔÏó
-         * @param path      ÎÄ¼şÂ·¾¶
-         * @param onSuccess ³É¹¦»Øµ÷
-         * @param onError   Ê§°Ü»Øµ÷
+         * è·å–æ–‡ä»¶çš„FileSystem URL
+         * @param rootDir   FileSystemè·Ÿå¯¹è±¡
+         * @param path      æ–‡ä»¶è·¯å¾„
+         * @param onSuccess æˆåŠŸå›è°ƒ
+         * @param onError   å¤±è´¥å›è°ƒ
          */
         getFileUrl: function (rootDir, path, onSuccess, onError) {
             rootDir.getFile(path, {}, function (fileEntry) {
@@ -304,7 +307,7 @@ $(function () {
     });
 
     $('#saveTextButton').bind('click', function () {
-        FS.writeFile(fileSystem.root, 'ÎÒÊÇÖĞ¹úÈË\r\nAAAAAAA', 'text.txt', function () {
+        FS.writeFile(fileSystem.root, 'æˆ‘æ˜¯ä¸­å›½äºº\r\nAAAAAAA', 'text.txt', function () {
                 console.log('success');
             },
             function (e) {

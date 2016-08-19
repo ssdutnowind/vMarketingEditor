@@ -1,0 +1,95 @@
+.bg-kb {
+    background-image: url("img/bg_kb.jpg?t=1471586724417");
+}
+
+.bg-lx {
+    background-image: url("img/bg_lx.jpg?t=1471586724417");
+}
+
+.bg-lyh {
+    background-image: url("img/bg_lyh.jpg?t=1471586724417");
+}
+
+.bg-yq {
+    background-image: url("img/bg_yq.jpg?t=1471586724417");
+}
+
+.bg-yq2 {
+    background-image: url("img/bg_yq2.jpg?t=1471586724417");
+}
+
+.card-after {
+    background-image: url("img/card_after.png?t=1471586724417");
+}
+
+.card-already {
+    background-image: url("img/card_already.png?t=1471586724417");
+}
+
+.card-before {
+    background-image: url("img/card_before.png?t=1471586724417");
+}
+
+.card-old {
+    background-image: url("img/card_old.png?t=1471586724417");
+}
+
+.card-violate {
+    background-image: url("img/card_violate.png?t=1471586724417");
+}
+
+body {
+    background-color: #009cde;
+}
+
+.button-large, .button-action {
+    background-color: #fdf500;
+    color: #009cde;
+}
+
+.scan-block span {
+    background-color: #10c0ba;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.apple-text {
+    color: #666666;
+}
+
+.activity-invite-title, .activity-invite-block p, .activity-title, .activity-body h1, .gift-title, .invite-color, .invite-activity-title, .invite-list-title {
+    color: #009cde;
+}
+
+.activity-invite-block, .activity-invite-title, .activity-block, .activity-title, .bindCard-image, .gift-block, .gift-title, .invite-activity-block, .invite-activity-title, .invite-list-title, .invite-summary, .invite-list-item {
+    border-color: #009cde;
+}
+
+.activity-invite-mark {
+    background-color: #009cde;
+}
+
+.gift-tips, .gift-join-tips {
+    color: #009cde;
+}
+
+.activity-block p {
+    color: #999999;
+}
+
+.invite-end-big, .invite-end-small {
+    color: #fdf500;
+}
+
+.icon-rule {
+    background-image: url("img/icon_right.png?t=1471586724417");
+}
+
+.link-block {
+    color: #999999;
+}
+
+.link-block a {
+    color: #009cde;
+}
+

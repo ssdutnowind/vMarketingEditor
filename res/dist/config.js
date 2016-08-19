@@ -20,8 +20,29 @@ var EDITOR_CONFIG = {
                 },
                 {
                     itemId: 'i02',
+                    itemLabel: '页面协议',
+                    itemDesc: '开发、测试：http；生产：https',
+                    type: 'Select',
+                    exports: 'protocol',
+                    default: 'https:',
+                    options: [
+                        {
+                            label: 'https协议',
+                            value: 'https:'
+                        },
+                        {
+                            label: 'http协议',
+                            value: 'http:'
+                        }
+                    ],
+                    extra: {
+                        size: 6
+                    }
+                },
+                {
+                    itemId: 'i03',
                     itemLabel: '活动状态',
-                    itemDesc: '0：结束；1：开始',
+                    itemDesc: '',
                     type: 'Select',
                     exports: 'activityStatus',
                     default: '1',
@@ -242,7 +263,7 @@ var EDITOR_CONFIG = {
                     exports: 'appleTip',
                     default: '本活动与Apple Inc.无关',
                     extra: {
-                        must: true,
+                        must: false,
                         maxLength: 20
                     }
                 },
@@ -494,9 +515,9 @@ var EDITOR_CONFIG = {
                     },
                     relevance: {
                         type: 'CSS',
-                        exports: '.kb-bg',
+                        exports: '.bg-kb',
                         name: 'background-image',
-                        value: 'url("img/bg_kb.jpg")'
+                        value: 'url("img/bg_kb.jpg?t=<%- timestamp %>")'
 
                     }
                 },
@@ -512,9 +533,9 @@ var EDITOR_CONFIG = {
                     },
                     relevance: {
                         type: 'CSS',
-                        exports: '.lx-bg',
+                        exports: '.bg-lx',
                         name: 'background-image',
-                        value: 'url("img/bg_lx.jpg")'
+                        value: 'url("img/bg_lx.jpg?t=<%- timestamp %>")'
 
                     }
                 },
@@ -530,9 +551,9 @@ var EDITOR_CONFIG = {
                     },
                     relevance: {
                         type: 'CSS',
-                        exports: '.lyh-bg',
+                        exports: '.bg-lyh',
                         name: 'background-image',
-                        value: 'url("img/bg_lyh.jpg")'
+                        value: 'url("img/bg_lyh.jpg?t=<%- timestamp %>")'
 
                     }
                 },
@@ -548,9 +569,9 @@ var EDITOR_CONFIG = {
                     },
                     relevance: {
                         type: 'CSS',
-                        exports: '.yq-bg',
+                        exports: '.bg-yq',
                         name: 'background-image',
-                        value: 'url("img/bg_yq.jpg")'
+                        value: 'url("img/bg_yq.jpg?t=<%- timestamp %>")'
 
                     }
                 },
@@ -566,9 +587,9 @@ var EDITOR_CONFIG = {
                     },
                     relevance: {
                         type: 'CSS',
-                        exports: '.yq2-bg',
+                        exports: '.bg-yq2',
                         name: 'background-image',
-                        value: 'url("img/bg_yq2.jpg")'
+                        value: 'url("img/bg_yq2.jpg?t=<%- timestamp %>")'
 
                     }
                 }
@@ -592,7 +613,7 @@ var EDITOR_CONFIG = {
                         type: 'CSS',
                         exports: '.card-after',
                         name: 'background-image',
-                        value: 'url("img/card_after.png")'
+                        value: 'url("img/card_after.png?t=<%- timestamp %>")'
 
                     }
                 },
@@ -610,7 +631,7 @@ var EDITOR_CONFIG = {
                         type: 'CSS',
                         exports: '.card-already',
                         name: 'background-image',
-                        value: 'url("img/card_already.png")'
+                        value: 'url("img/card_already.png?t=<%- timestamp %>")'
 
                     }
                 },
@@ -628,7 +649,7 @@ var EDITOR_CONFIG = {
                         type: 'CSS',
                         exports: '.card-before',
                         name: 'background-image',
-                        value: 'url("img/card_before.png")'
+                        value: 'url("img/card_before.png?t=<%- timestamp %>")'
 
                     }
                 },
@@ -646,7 +667,7 @@ var EDITOR_CONFIG = {
                         type: 'CSS',
                         exports: '.card-old',
                         name: 'background-image',
-                        value: 'url("img/card_old.png")'
+                        value: 'url("img/card_old.png?t=<%- timestamp %>")'
 
                     }
                 },
@@ -664,7 +685,7 @@ var EDITOR_CONFIG = {
                         type: 'CSS',
                         exports: '.card-violate',
                         name: 'background-image',
-                        value: 'url("img/card_violate.png")'
+                        value: 'url("img/card_violate.png?t=<%- timestamp %>")'
 
                     }
                 }
@@ -784,7 +805,7 @@ var EDITOR_CONFIG = {
                 },
                 {
                     itemId: 'i09',
-                    itemLabel: '文字标签颜色',
+                    itemLabel: '圆点文字背景颜色',
                     itemDesc: '',
                     type: 'CSS',
                     exports: '.activity-invite-mark',
@@ -796,10 +817,10 @@ var EDITOR_CONFIG = {
                 },
                 {
                     itemId: 'i10',
-                    itemLabel: '次要文字颜色',
+                    itemLabel: '礼包提示文字颜色',
                     itemDesc: '',
                     type: 'CSS',
-                    exports: '.link-block.invite-tips, .gift-tips, .gift-join-tips',
+                    exports: '.gift-tips, .gift-join-tips',
                     default: '#666666',
                     extra: {
                         name: 'color',
@@ -850,13 +871,13 @@ var EDITOR_CONFIG = {
                         type: 'CSS',
                         exports: '.icon-rule',
                         name: 'background-image',
-                        value: 'url("img/icon_right.png")'
+                        value: 'url("img/icon_right.png?t=<%- timestamp %>")'
 
                     }
                 },
                 {
                     itemId: 'i02',
-                    itemLabel: '条款普通文字',
+                    itemLabel: '普通文字颜色',
                     itemDesc: '',
                     type: 'CSS',
                     exports: '.link-block',
@@ -868,10 +889,34 @@ var EDITOR_CONFIG = {
                 },
                 {
                     itemId: 'i03',
-                    itemLabel: '条款链接文字',
+                    itemLabel: '链接文字颜色',
                     itemDesc: '',
                     type: 'CSS',
                     exports: '.link-block a',
+                    default: '#d23123',
+                    extra: {
+                        name: 'color',
+                        type: 'Color'
+                    }
+                },
+                {
+                    itemId: 'i04',
+                    itemLabel: '普通文字颜色（浅背景）',
+                    itemDesc: '',
+                    type: 'CSS',
+                    exports: '.link-block.invite-tips',
+                    default: '#999999',
+                    extra: {
+                        name: 'color',
+                        type: 'Color'
+                    }
+                },
+                {
+                    itemId: 'i05',
+                    itemLabel: '链接文字颜色（浅背景）',
+                    itemDesc: '',
+                    type: 'CSS',
+                    exports: '.link-block.invite-tips a, .bg-yq2 .link-block a',
                     default: '#d23123',
                     extra: {
                         name: 'color',

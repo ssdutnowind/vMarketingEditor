@@ -37,6 +37,18 @@ var FormItems = {
             return this.value;
         };
 
+        this.reset = function () {
+            this.$inputEl.val(this.config.default || '');
+            this.value = this.$inputEl.val();
+        };
+
+        this.getExportString = function () {
+            var str = '';
+            str += '    // ' + this.config.itemLabel + '\r\n';
+            str += '    ' + this.exports + ': "' + this.getValue() + '"';
+            return str;
+        };
+
         this.validate = function () {
             if (this.must && !this.getValue()) {
                 this.$el.addClass('has-error');
@@ -71,6 +83,8 @@ var FormItems = {
         this.type = 'Array';
         this.config = config;
         this.exports = config.exports;
+        this.must = this.config.extra && this.config.extra.must || false;
+
         // 模板
         this.tpl = '<div class="form-group">' +
             '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %>' +
@@ -87,12 +101,24 @@ var FormItems = {
 
         this.setValue = function (val) {
             this.value = val;
-            this.$inputEl.val(this.value.join('\r\n'));
+            this.$inputEl.val(this.value.join('\n'));
         };
 
         this.getValue = function (val) {
-            this.value = this.$inputEl.val().split('\r\n');
+            this.value = this.$inputEl.val().split('\n');
             return this.value;
+        };
+
+        this.reset = function () {
+            this.$inputEl.val(this.config.default && this.config.default.join('\n') || '');
+            this.value = this.$inputEl.val();
+        };
+
+        this.getExportString = function () {
+            var str = '';
+            str += '    // ' + this.config.itemLabel + '\n';
+            str += '    ' + this.exports + ': ' + JSON.stringify(this.getValue());
+            return str;
         };
 
         this.validate = function () {
@@ -129,6 +155,8 @@ var FormItems = {
         this.type = 'Select';
         this.config = config;
         this.exports = config.exports;
+        this.must = this.config.extra && this.config.extra.must || false;
+
         // 模板
         this.tpl = '<div class="form-group">' +
             '    <label for="<%- groupId + \'_\' + itemId + \'_0\' %>" class="col-md-3 control-label"><%- itemLabel %>' +
@@ -148,11 +176,26 @@ var FormItems = {
         this.value = null;
 
         this.setValue = function (val) {
-
+            this.$el.find('input[value="' + val + '"]').attr('checked', true);
         };
 
         this.getValue = function (val) {
+            this.value = this.$el.find('input:radio[name=' + config.exports + ']:checked').val();
+            return this.value;
+        };
 
+        this.reset = function () {
+            if (this.config.default) {
+                this.$el.find('input[value="' + this.config.default + '"]').attr('checked', true);
+            }
+            this.value = this.config.default || '';
+        };
+
+        this.getExportString = function () {
+            var str = '';
+            str += '    // ' + this.config.itemLabel + '\r\n';
+            str += '    ' + this.exports + ': "' + this.getValue() + '"';
+            return str;
         };
 
         this.validate = function () {
@@ -187,6 +230,7 @@ var FormItems = {
         this.maxSize = config.extra && config.extra.maxSize || 1024 * 1024;
         this.suffix = config.extra && config.extra.suffix || '';
         this.exports = config.exports;
+        this.must = this.config.extra && this.config.extra.must || false;
 
         // 模板
         this.tpl = '<div class="form-group">' +
@@ -204,41 +248,78 @@ var FormItems = {
         this.value = null;
 
         this.setValue = function (file) {
-            // 检查文件类型
-            if (that.suffix) {
-                if (file.name.toLowerCase().lastIndexOf(that.suffix) !== file.name.lastIndexOf('.')) {
-                    Util.showAlert('请选择“' + that.suffix + '”类型的文件！');
+            if(typeof file !== 'string'){
+                // 检查文件类型
+                if (that.suffix) {
+                    if (file.name.toLowerCase().lastIndexOf(that.suffix) !== file.name.lastIndexOf('.')) {
+                        Util.showAlert('请选择“' + that.suffix + '”类型的文件！');
+                        return;
+                    }
+                }
+                // 检查文件大小
+                if (file.size > that.maxSize) {
+                    Util.showAlert('文件体积不能大于 ' + (that.maxSize / 1024) + 'KB！');
                     return;
                 }
             }
-            // 检查文件大小
-            if (file.size > that.maxSize) {
-                Util.showAlert('文件体积不能大于 ' + (that.maxSize / 1024) + 'KB！');
-                return;
-            }
             this.value = file;
+            this.$inputEl.val('');
             setPreview(file);
         };
 
-        this.getValue = function (val) {
+        this.getValue = function () {
+            if (this.value) {
+                return this.value;
+            } else if (this.$inputEl[0].files.length > 0) {
+                return this.$inputEl[0].files[0];
+            } else {
+                return null;
+            }
+        };
 
+        this.reset = function () {
+            this.$inputEl.val('');
+            this.value = null;
+            setPreview(null);
+        };
+
+        this.getExportObject = function (timestamp) {
+            if (!this.getValue() || !this.config.relevance) {
+                return {};
+            }
+
+            var obj = {};
+            obj[this.config.relevance.exports] = {};
+            obj[this.config.relevance.exports][this.config.relevance.name] = Util.template(this.config.relevance.value, {timestamp: timestamp});
+            return obj;
         };
 
         this.validate = function () {
-            return true;
+            if (this.must && !this.getValue()) {
+                this.$el.addClass('has-error');
+                return false;
+            } else {
+                this.$el.removeClass('has-error');
+                return true;
+            }
         };
 
         function setPreview(file) {
-            var reader = new FileReader();
-            reader.onloadend = function () {
-                that.$el.find('img').attr('src', reader.result);
-                that.$el.find('img').show();
-            };
-            if (file) {
-                reader.readAsDataURL(file);
+            if(typeof file === 'string'){
+                    that.$el.find('img').attr('src', file);
+                    that.$el.find('img').show();
             } else {
-                that.$el.find('img').attr('src', '');
-                that.$el.find('img').hide();
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    that.$el.find('img').attr('src', reader.result);
+                    that.$el.find('img').show();
+                };
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    that.$el.find('img').attr('src', '');
+                    that.$el.find('img').hide();
+                }
             }
         }
 
@@ -252,19 +333,20 @@ var FormItems = {
             // 检查文件类型
             if (that.suffix) {
                 if (file.name.toLowerCase().lastIndexOf(that.suffix) !== file.name.lastIndexOf('.')) {
+                    this.$inputEl.val('');
                     Util.showAlert('请选择“' + that.suffix + '”类型的文件！');
                     return;
                 }
             }
             // 检查文件大小
             if (file.size > that.maxSize) {
+                this.$inputEl.val('');
                 Util.showAlert('文件体积不能大于 ' + (that.maxSize / 1024) + 'KB！');
                 return;
             }
-
+            this.value = file;
             setPreview(file);
         });
-
 
         $container.append(this.$el);
     },
@@ -281,6 +363,8 @@ var FormItems = {
         this.type = 'CSS';
         this.config = config;
         this.exports = config.exports;
+        this.must = this.config.extra && this.config.extra.must || false;
+
         // 模板
         this.tpl = '<div class="form-group">' +
             '    <label for="<%- groupId + \'_\' + itemId %>" class="col-md-3 control-label"><%- itemLabel %>' +
@@ -300,12 +384,29 @@ var FormItems = {
             '</div>';
         this.value = null;
 
-        this.setValue = function (val) {
-
+        this.setValue = function (value) {
+            this.$el.find('.color-picker').colorpicker('setValue', value);
         };
 
-        this.getValue = function (val) {
+        this.getValue = function () {
+            this.value = this.$inputEl.val().toLowerCase();
+            return this.value;
+        };
 
+        this.reset = function () {
+            this.value = this.config.default || '';
+            this.$el.find('.color-picker').colorpicker('setValue', this.value);
+        };
+
+        this.getExportObject = function () {
+            if (!this.getValue() || !this.config.extra) {
+                return {};
+            }
+
+            var obj = {};
+            obj[this.exports] = {};
+            obj[this.exports][this.config.extra.name] = this.getValue();
+            return obj;
         };
 
         this.validate = function () {

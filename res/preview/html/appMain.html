@@ -1,0 +1,108 @@
+<script type="text/html">
+    <a class="scan-block dn" id="buttonShowQRCode">
+        <span>扫二维码分享</span>
+    </a>
+
+    <!-- 领奖结果页面 -->
+    <div id="resultBlock" class="container bg-lx">
+        <!-- 默认界面，纯粹为了撑高页面 -->
+        <div id="resultBlockDefault">
+            <div class="card-placeholder">
+            </div>
+        </div>
+        <!-- 领奖前 -->
+        <div id="resultBlockBefore" class="dn">
+            <div class="card-placeholder">
+                <div class="card-block card-before">
+                </div>
+            </div>
+            <!-- 我要参加按钮 -->
+            <button class="button-large" id="buttonGetGift"><%- appGiftButtonTitle %></button>
+            <!-- 活动细则 -->
+            <div class="link-block center">
+                <div class="text-center">
+                    详见<a href="#activityRuleNew">活动细则</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 领奖成功 -->
+        <div id="resultBlockAfter" class="dn">
+            <div class="card-placeholder">
+                <div class="card-block card-after">
+                </div>
+            </div>
+            <!-- 查看礼包按钮 -->
+            <a class="button-large showGift" id="buttonShowGift"><%- appShowGiftButtonTitle %></a>
+            <!-- 活动细则 -->
+            <div class="link-block center">
+                <div class="text-center">
+                    详见<a href="#activityRuleNew">活动细则</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 已领过 -->
+        <div id="resultBlockAlready" class="dn">
+            <div class="card-placeholder">
+                <div class="card-block card-already">
+                </div>
+            </div>
+            <!-- 查看礼包按钮 -->
+            <a class="button-large showGift" id="buttonShowGift2"><%- appShowGiftButtonTitle %></a>
+            <!-- 活动细则 -->
+            <div class="link-block center">
+                <div class="text-center">
+                    详见<a href="#activityRuleNew">活动细则</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 违规 -->
+        <div id="resultBlockViolate" class="dn">
+            <div class="card-placeholder">
+                <div class="card-block card-violate">
+                </div>
+            </div>
+            <!-- 活动细则 -->
+            <div class="link-block center">
+                <div class="text-center">
+                    查看<a href="#activityRuleNew">活动细则</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 老用户 -->
+        <div id="resultBlockOld" class="dn">
+            <div class="card-placeholder">
+                <div class="card-block card-old">
+                </div>
+            </div>
+            <!-- 查看礼包按钮 -->
+            <a class="button-large" id="buttonJoinActivity1" href="inviteIndex.html">我要参加</a>
+            <!-- 活动细则 -->
+            <div class="link-block center">
+                <div class="text-center">
+                    详见<a href="#activityRuleNew">活动细则</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二维码 -->
+    <div id="qrCodeMask" class="qrCode-mask dn">
+        <div class="qrCode-block">
+            <div class="qrCode-block-top">
+                <div class="qrCode-close" id="buttonCloseQRCode">
+                    <img src="../img/close.png"/>
+                </div>
+
+                <div id="qrCodeContainer" class="qrCode-container"></div>
+            </div>
+            <div class="qrCode-block-bottom">
+                <p><%- scanTip %></p>
+            </div>
+
+        </div>
+    </div>
+</script>
