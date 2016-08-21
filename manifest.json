@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "病毒营销配置工具",
+  "version": "0.1",
+  "icons": {
+    "128": "icon.png"
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "病毒营销配置工具",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite"
+  ]
+}
