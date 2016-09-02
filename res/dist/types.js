@@ -27,21 +27,36 @@ var FormItems = {
             '</div>';
         this.value = null;
 
+        /**
+         * 设置值
+         * @param val
+         */
         this.setValue = function (val) {
             this.value = val;
             this.$inputEl.val(val);
         };
 
+        /**
+         * 取值
+         * @returns {null}
+         */
         this.getValue = function () {
             this.value = this.$inputEl.val();
             return this.value;
         };
 
+        /**
+         * 重置值
+         */
         this.reset = function () {
             this.$inputEl.val(this.config.default || '');
             this.value = this.$inputEl.val();
         };
 
+        /**
+         * 获取导出的字符串
+         * @returns {string}
+         */
         this.getExportString = function () {
             var str = '';
             str += '    // ' + this.config.itemLabel + '\r\n';
@@ -49,6 +64,10 @@ var FormItems = {
             return str;
         };
 
+        /**
+         * 验证有效性
+         * @returns {boolean}
+         */
         this.validate = function () {
             if (this.must && !this.getValue()) {
                 this.$el.addClass('has-error');
@@ -99,21 +118,36 @@ var FormItems = {
             '</div>';
         this.value = null;
 
+        /**
+         * 设置值
+         * @param val
+         */
         this.setValue = function (val) {
             this.value = val;
             this.$inputEl.val(this.value.join('\n'));
         };
 
+        /**
+         * 取值
+         * @returns {null}
+         */
         this.getValue = function (val) {
             this.value = this.$inputEl.val().split('\n');
             return this.value;
         };
 
+        /**
+         * 重置值
+         */
         this.reset = function () {
             this.$inputEl.val(this.config.default && this.config.default.join('\n') || '');
             this.value = this.$inputEl.val();
         };
 
+        /**
+         * 获取导出的字符串
+         * @returns {string}
+         */
         this.getExportString = function () {
             var str = '';
             str += '    // ' + this.config.itemLabel + '\n';
@@ -121,6 +155,10 @@ var FormItems = {
             return str;
         };
 
+        /**
+         * 验证有效性
+         * @returns {boolean}
+         */
         this.validate = function () {
             if (this.must && !this.getValue()) {
                 this.$el.addClass('has-error');
@@ -175,15 +213,26 @@ var FormItems = {
             '</div>';
         this.value = null;
 
+        /**
+         * 设置值
+         * @param val
+         */
         this.setValue = function (val) {
             this.$el.find('input[value="' + val + '"]').attr('checked', true);
         };
 
+        /**
+         * 取值
+         * @returns {null}
+         */
         this.getValue = function (val) {
             this.value = this.$el.find('input:radio[name=' + config.exports + ']:checked').val();
             return this.value;
         };
 
+        /**
+         * 重置值
+         */
         this.reset = function () {
             if (this.config.default) {
                 this.$el.find('input[value="' + this.config.default + '"]').attr('checked', true);
@@ -191,6 +240,10 @@ var FormItems = {
             this.value = this.config.default || '';
         };
 
+        /**
+         * 获取导出的字符串
+         * @returns {string}
+         */
         this.getExportString = function () {
             var str = '';
             str += '    // ' + this.config.itemLabel + '\r\n';
@@ -198,6 +251,10 @@ var FormItems = {
             return str;
         };
 
+        /**
+         * 验证有效性
+         * @returns {boolean}
+         */
         this.validate = function () {
             return true;
         };
@@ -247,8 +304,12 @@ var FormItems = {
             '</div>';
         this.value = null;
 
+        /**
+         * 设置值
+         * @param val
+         */
         this.setValue = function (file) {
-            if(typeof file !== 'string'){
+            if (typeof file !== 'string') {
                 // 检查文件类型
                 if (that.suffix) {
                     if (file.name.toLowerCase().lastIndexOf(that.suffix) !== file.name.lastIndexOf('.')) {
@@ -267,6 +328,10 @@ var FormItems = {
             setPreview(file);
         };
 
+        /**
+         * 取值
+         * @returns {null}
+         */
         this.getValue = function () {
             if (this.value) {
                 return this.value;
@@ -277,12 +342,20 @@ var FormItems = {
             }
         };
 
+        /**
+         * 重置值
+         */
         this.reset = function () {
             this.$inputEl.val('');
             this.value = null;
             setPreview(null);
         };
 
+        /**
+         * 获取导出的CSS对象
+         * @param timestamp
+         * @returns {{}}
+         */
         this.getExportObject = function (timestamp) {
             if (!this.getValue() || !this.config.relevance) {
                 return {};
@@ -294,6 +367,10 @@ var FormItems = {
             return obj;
         };
 
+        /**
+         * 验证有效性
+         * @returns {boolean}
+         */
         this.validate = function () {
             if (this.must && !this.getValue()) {
                 this.$el.addClass('has-error');
@@ -304,10 +381,14 @@ var FormItems = {
             }
         };
 
+        /**
+         * 生成图片预览
+         * @param file
+         */
         function setPreview(file) {
-            if(typeof file === 'string'){
-                    that.$el.find('img').attr('src', file);
-                    that.$el.find('img').show();
+            if (typeof file === 'string') {
+                that.$el.find('img').attr('src', file);
+                that.$el.find('img').show();
             } else {
                 var reader = new FileReader();
                 reader.onloadend = function () {
@@ -384,20 +465,35 @@ var FormItems = {
             '</div>';
         this.value = null;
 
+        /**
+         * 设置值
+         * @param val
+         */
         this.setValue = function (value) {
             this.$el.find('.color-picker').colorpicker('setValue', value);
         };
 
+        /**
+         * 取值
+         * @returns {null}
+         */
         this.getValue = function () {
             this.value = this.$inputEl.val().toLowerCase();
             return this.value;
         };
 
+        /**
+         * 重置值
+         */
         this.reset = function () {
             this.value = this.config.default || '';
             this.$el.find('.color-picker').colorpicker('setValue', this.value);
         };
 
+        /**
+         * 获取导出的CSS对象
+         * @returns {{}}
+         */
         this.getExportObject = function () {
             if (!this.getValue() || !this.config.extra) {
                 return {};
@@ -409,6 +505,10 @@ var FormItems = {
             return obj;
         };
 
+        /**
+         * 验证有效性
+         * @returns {boolean}
+         */
         this.validate = function () {
             return true;
         };

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "病毒营销配置工具",
-  "version": "0.1",
+  "version": "0.3",
   "icons": {
     "128": "icon.png"
   },
@@ -14,5 +14,6 @@
     "tabs",
     "clipboardRead",
     "clipboardWrite"
-  ]
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

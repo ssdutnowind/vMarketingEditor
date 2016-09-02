@@ -18,7 +18,7 @@ $(function () {
 
         /**
          * 创建目录
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param path      文件路径
          * @param onSuccess 成功回调
          * @param onError   失败回调
@@ -43,7 +43,7 @@ $(function () {
 
         /**
          * 删除目录
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param path      文件夹路径
          * @param onSuccess 成功回调
          * @param onError   失败回调
@@ -60,7 +60,7 @@ $(function () {
 
         /**
          * 列出目录内容
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param path      文件夹路径
          * @param onSuccess 成功回调
          * @param onError   失败回调
@@ -88,8 +88,25 @@ $(function () {
         },
 
         /**
+         * 拷贝文件夹
+         * @param rootDir   FileSystem根对象
+         * @param src       源路径
+         * @param dest      目标路径
+         * @param onSuccess 成功回调
+         * @param onError   失败回调
+         */
+        copyFolder: function (rootDir, src, dest, onSuccess, onError) {
+            rootDir.getDirectory(src, {}, function (dirEntry1) {
+                rootDir.getDirectory(dest, {}, function (dirEntry2) {
+                    dirEntry1.copyTo(dirEntry2, dirEntry1.name, onSuccess, onError);
+                }, onError);
+
+            }, onError);
+        },
+
+        /**
          * 移动目录
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param src       源目录
          * @param dest      目标目录
          * @param onSuccess 成功回调
@@ -109,7 +126,7 @@ $(function () {
 
         /**
          * 删除文件
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param path      文件路径
          * @param onSuccess 成功回调
          * @param onError   失败回调
@@ -128,7 +145,7 @@ $(function () {
 
         /**
          * 写入文件
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param content   写入内容（String/Blob/File）
          * @param path      文件路径
          * @param onSuccess 成功回调
@@ -168,7 +185,7 @@ $(function () {
 
         /**
          * 从服务器直接下载文件到FileSystem
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param url       文件的服务器路径
          * @param path      文件路径
          * @param onSuccess 成功回调
@@ -194,7 +211,7 @@ $(function () {
 
         /**
          * 读取文件内容
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param path      文件路径
          * @param type      读取类型（arrayBuffer/dataUrl/binaryString/text）
          * @param onSuccess 成功回调
@@ -250,7 +267,7 @@ $(function () {
 
         /**
          * 移动文件
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param src       源路径
          * @param dest      目标路径
          * @param onSuccess 成功回调
@@ -270,7 +287,7 @@ $(function () {
 
         /**
          * 获取文件的FileSystem URL
-         * @param rootDir   FileSystem跟对象
+         * @param rootDir   FileSystem根对象
          * @param path      文件路径
          * @param onSuccess 成功回调
          * @param onError   失败回调

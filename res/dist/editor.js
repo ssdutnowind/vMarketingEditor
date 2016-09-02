@@ -70,39 +70,7 @@ $(function () {
     // 是否预览
     var isPreview = false;
 
-    /**
-     * 初始化页面
-     */
-    function initPage(callback) {
-        // 请求永久配额
-        window.webkitStorageInfo.requestQuota(window.PERSISTENT, 100 * 1024 * 1024, function (grantedBytes) {
-            // 初始化FileSystem
-            FS.initFileSystem(function (filesystem) {
-                    console.log(filesystem);
-                    fs = filesystem;
-                    FS.createFolder(fs.root, 'work', function (dEntry) {
-                        console.log(dEntry);
-                        workDir = dEntry;
-
-                        if (typeof callback === 'function') {
-                            callback();
-                        }
-
-                    }, function (e) {
-                        console.log(e);
-                        Util.showAlert('申请存储配额失败！');
-                    });
-                },
-                function (e) {
-                    console.log(e);
-                    Util.showAlert('申请存储配额失败！');
-                }, window.PERSISTENT, grantedBytes);
-
-        }, function (e) {
-            console.log(e);
-            Util.showAlert('申请存储配额失败！');
-        });
-
+    function createEditors() {
         // 生成编辑界面
         var containerTpl = '<div class="box box-primary">' +
             '    <div class="box-header with-border">' +
@@ -146,6 +114,62 @@ $(function () {
             }
             $('#formContainer').append($group);
         }
+    }
+
+    /**
+     * 初始化页面
+     */
+    function initPage(callback) {
+        // 请求永久配额
+        window.webkitStorageInfo.requestQuota(window.PERSISTENT, 100 * 1024 * 1024, function (grantedBytes) {
+            // 初始化FileSystem
+            FS.initFileSystem(function (filesystem) {
+                    console.log(filesystem);
+                    fs = filesystem;
+                    FS.createFolder(fs.root, 'work', function (dEntry) {
+                        console.log(dEntry);
+                        workDir = dEntry;
+
+                        // 尝试加载配置文件
+                        FS.readFile(fs.root, 'editorConfig.js', 'text',
+                            function (data) {
+                                data += '\nreturn EDITOR_CONFIG;';
+                                var fun;
+                                try {
+                                    fun = new Function(data);
+                                    EDITOR_CONFIG = fun();
+                                } catch (e) {
+                                }
+                                // 失败了则使用默认配置
+                                createEditors();
+
+                                if (typeof callback === 'function') {
+                                    callback();
+                                }
+                            },
+                            function () {
+                                // 失败了则使用默认配置
+                                createEditors();
+
+                                if (typeof callback === 'function') {
+                                    callback();
+                                }
+                            });
+
+                    }, function (e) {
+                        console.log(e);
+                        Util.showAlert('申请存储配额失败！');
+                    });
+                },
+                function (e) {
+                    console.log(e);
+                    Util.showAlert('申请存储配额失败！');
+                }, window.PERSISTENT, grantedBytes);
+
+        }, function (e) {
+            console.log(e);
+            Util.showAlert('申请存储配额失败！');
+        });
     }
 
     /**
@@ -197,10 +221,17 @@ $(function () {
 
         // 预览
         $('#buttonPreview').bind('click', function () {
-            // isExport = true;
-            // isPreview = false;
-            // doSave();
-            doPreview();
+            isExport = false;
+            isPreview = true;
+            doSave();
+            // doPreview();
+        });
+
+        // 新窗口预览
+        $('button.preview-new').bind('click', function () {
+            var tabId = $(this).attr('data-tab');
+            var url = $(tabId).find('iframe').attr('src');
+            window.open(url, '_blank');
         });
 
         // 显示导入对话框
@@ -265,6 +296,10 @@ $(function () {
                     if (config.hasOwnProperty(i)) {
                         items.forEach(function (item, index) {
                             if (item.type === 'String' && item.exports === i) {
+                                item.setValue(config[i]);
+                            } else if (item.type === 'Array' && item.exports === i) {
+                                item.setValue(config[i]);
+                            } else if (item.type === 'Select' && item.exports === i) {
                                 item.setValue(config[i]);
                             }
                         });
@@ -351,11 +386,6 @@ $(function () {
                         items.forEach(function (item) {
                             if (item.type === 'Image' && item.exports === entry.name) {
                                 item.setValue(entry.toURL())
-                                // (function (item, entry) {
-                                //     entry.file(function (file) {
-                                //         item.setValue(file);
-                                //     });
-                                // })(item, entry);
                             }
                         });
                     }
@@ -593,12 +623,95 @@ $(function () {
      * 预览
      */
     function doPreview() {
-        var height = $(window).height() - 150;
-        height = height > 850 ? 850 : height;
-        $('#previewDialog .tab-content').height(height);
-        $('#previewDialog .tab-content').css('overflow-y', 'auto');
-        $('#previewDialog').show();
-        startPreviewTimer();
+        Util.showProgress(80, '正在准备预览……')
+        FS.readFile(fs.root, 'preview/js/previewHack.js', 'Text',
+            function () {
+                // 成功说明已经存在预览文件，不再解压缩
+                preparePreview();
+            },
+            function () {
+                // 失败可能是文件不存在，解压
+                // 第二步打开zip文件检查文件内容
+                var zipFs = new zip.fs.FS();
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'res/preview.zip', true);
+                xhr.responseType = 'blob';
+
+                xhr.onload = function (e) {
+                    if (this.status === 200) {
+                        // Chrome Extension无法获取到Content-Length，
+                        zipFs.importBlob(this.response,
+                            function () {
+                                // zip导入成功
+                                zipFs.root.getFileEntry(fs.root,
+                                    function () {
+                                        // 已经解压成功
+                                        preparePreview();
+                                    }, null,
+                                    function (e) {
+                                        console.log(e);
+                                        Util.hideProgress();
+                                        Util.showAlert('准备预览出错：' + (e.message || '未知错误'));
+                                    });
+                            },
+                            function (e) {
+                                console.log(e);
+                                Util.hideProgress();
+                                Util.showAlert('准备预览出错：' + (e.message || '未知错误'));
+                            });
+                    }
+                };
+                xhr.onerror = function (e) {
+                    console.log(e);
+                };
+                xhr.send();
+            });
+    }
+
+    /**
+     * 预览前最后一步
+     */
+    function preparePreview() {
+        function copyTheme() {
+            Util.showProgress(100, '正在准备预览……');
+            FS.copyFolder(fs.root, 'work/theme', 'preview',
+                function (dirEntry) {
+                    Util.hideProgress();
+                    // 设置四个窗口预览路径
+                    var path = dirEntry.toURL();
+                    var previewDir = path + '/../html/';
+                    var url1 = previewDir + 'snsIndex.html?user=new';
+                    var url2 = previewDir + 'snsIndex.html?user=old';
+                    var url3 = previewDir + 'appIndex.html?user=already';
+                    var url4 = previewDir + 'inviteIndex.html?user=old';
+                    $('iframe').attr('src', 'about:blank');
+                    $('#tab_1 iframe').attr('src', url1);
+                    $('#tab_2 iframe').attr('src', url2);
+                    $('#tab_3 iframe').attr('src', url3);
+                    $('#tab_4 iframe').attr('src', url4);
+                    // 动态计算窗口高度
+                    var height = $(window).height() - 130;
+                    height = height > 850 ? 850 : height;
+                    $('#previewDialog .tab-content').height(height);
+                    $('#previewDialog .tab-content').css('overflow-y', 'auto');
+                    $('#previewDialog').show();
+                    startPreviewTimer();
+                },
+                function (e) {
+                    console.log(e);
+                    Util.hideProgress();
+                });
+        }
+
+        // 已经存在的目录直接拷贝会出错，所以先删除目标目录
+        FS.removeFolder(fs.root, 'preview/theme',
+            function () {
+                copyTheme();
+            },
+            function () {
+                copyTheme();
+            });
     }
 
     /**

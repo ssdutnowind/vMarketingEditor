@@ -251,7 +251,7 @@ var EDITOR_CONFIG = {
                         '好友再邀请1名好友，您可再获得2元银联红包奖励。',
                         '光荣奖：邀请好友达10-49名，再赠送30元银联红包；邀请好友达50-499名，再赠送300元银联红包；邀请好友达500名及以上，邀请人数最多的前5名，再赠送4999元银联红包。'
                     ],
-                    extra:{
+                    extra: {
                         must: true
                     }
                 },
@@ -327,6 +327,25 @@ var EDITOR_CONFIG = {
             items: [
                 {
                     itemId: 'i01',
+                    itemLabel: '拉新细则链接',
+                    itemDesc: '是否在页面底端显示细则链接（仅社交页面）',
+                    type: 'Select',
+                    exports: 'showNewRule',
+                    default: '1',
+                    options: [
+                        {
+                            label: '显示',
+                            value: '1'
+                        },
+                        {
+                            label: '隐藏',
+                            value: '0'
+                        }
+                    ],
+                    extra: {}
+                },
+                {
+                    itemId: 'i02',
                     itemLabel: '细则标题',
                     itemDesc: '',
                     type: 'String',
@@ -338,7 +357,7 @@ var EDITOR_CONFIG = {
                     }
                 },
                 {
-                    itemId: 'i02',
+                    itemId: 'i03',
                     itemLabel: '活动时间',
                     itemDesc: '',
                     type: 'String',
@@ -350,7 +369,7 @@ var EDITOR_CONFIG = {
                     }
                 },
                 {
-                    itemId: 'i03',
+                    itemId: 'i04',
                     itemLabel: '活动规则',
                     itemDesc: '拉新活动细则，每行一条',
                     type: 'Array',
@@ -361,12 +380,12 @@ var EDITOR_CONFIG = {
                         '3、礼包可立即领取，请注意礼包中的优惠券有效期，适用门店以优惠券详情中的适用门店为准。活动期间优惠券发放根据实际情况可能会有调整；',
                         '4、作弊、违规用户将被取消领取任何活动奖励的资格。'
                     ],
-                    extra:{
+                    extra: {
                         must: true
                     }
                 },
                 {
-                    itemId: 'i04',
+                    itemId: 'i05',
                     itemLabel: '活动说明',
                     itemDesc: '拉新活动说明，每行一条',
                     type: 'Array',
@@ -386,7 +405,7 @@ var EDITOR_CONFIG = {
                         '6、本活动所指的用户为自然人。',
                         '7、本活动与苹果公司无关。'
                     ],
-                    extra:{
+                    extra: {
                         must: true
                     }
                 }
@@ -398,6 +417,25 @@ var EDITOR_CONFIG = {
             items: [
                 {
                     itemId: 'i01',
+                    itemLabel: '邀请细则链接',
+                    itemDesc: '是否在页面底端显示细则链接（仅社交页面）',
+                    type: 'Select',
+                    exports: 'showInviteRule',
+                    default: '1',
+                    options: [
+                        {
+                            label: '显示',
+                            value: '1'
+                        },
+                        {
+                            label: '隐藏',
+                            value: '0'
+                        }
+                    ],
+                    extra: {}
+                },
+                {
+                    itemId: 'i02',
                     itemLabel: '细则标题',
                     itemDesc: '',
                     type: 'String',
@@ -409,7 +447,7 @@ var EDITOR_CONFIG = {
                     }
                 },
                 {
-                    itemId: 'i02',
+                    itemId: 'i03',
                     itemLabel: '活动时间',
                     itemDesc: '',
                     type: 'String',
@@ -421,7 +459,7 @@ var EDITOR_CONFIG = {
                     }
                 },
                 {
-                    itemId: 'i03',
+                    itemId: 'i04',
                     itemLabel: '活动主题',
                     itemDesc: '',
                     type: 'String',
@@ -433,7 +471,7 @@ var EDITOR_CONFIG = {
                     }
                 },
                 {
-                    itemId: 'i04',
+                    itemId: 'i05',
                     itemLabel: '奖励说明',
                     itemDesc: '邀请活动奖励说明，每行一条',
                     type: 'Array',
@@ -444,12 +482,12 @@ var EDITOR_CONFIG = {
                         '3、额外奖励：邀请好友达10-49名，再赠送30元银联红包；邀请好友达50-499名，再赠送300元银联红包；邀请好友达500名及以上，邀请人数最多的前5名，再赠送4999元银联红包。',
                         '4、作弊用户将被取消领取活动奖励的资格。'
                     ],
-                    extra:{
+                    extra: {
                         must: true
                     }
                 },
                 {
-                    itemId: 'i05',
+                    itemId: 'i06',
                     itemLabel: '活动规则',
                     itemDesc: '邀请活动规则，每行一条',
                     type: 'Array',
@@ -468,16 +506,16 @@ var EDITOR_CONFIG = {
                         '11、被邀请的多个不同的新注册用户，如绑定的银行卡为同一开卡人，邀请用户只能得到一个银联红包，第一个绑卡的账号有效；如通过账户实名认证绑卡的多个账号为同一个身份证号，只计为一个有效邀请用户，第一个通过账户实名认证绑卡的账号有效。',
                         '12、作弊用户将被取消领取任何活动奖励的资格。'
                     ],
-                    extra:{
+                    extra: {
                         must: true
                     }
                 },
                 {
-                    itemId: 'i06',
+                    itemId: 'i07',
                     itemLabel: '活动说明',
                     itemDesc: '邀请活动说明，每行一条',
                     type: 'Array',
-                    exports: 'ruleNewDesc',
+                    exports: 'ruleInviteDesc',
                     default: [
                         '1、参与本活动用户不得实施下列任何一种违规行为(以下统称”违规行为”)：',
                         'a) 虚假交易的行为；',
@@ -493,9 +531,28 @@ var EDITOR_CONFIG = {
                         '6、本活动所指的用户为自然人。',
                         '7、本活动与苹果公司无关。'
                     ],
-                    extra:{
+                    extra: {
                         must: true
                     }
+                },
+                {
+                    itemId: 'i08',
+                    itemLabel: '显示邀请细则图片',
+                    itemDesc: '是否在邀请细则页面显示推荐关系图片',
+                    type: 'Select',
+                    exports: 'showInviteImage',
+                    default: '1',
+                    options: [
+                        {
+                            label: '显示',
+                            value: '1'
+                        },
+                        {
+                            label: '隐藏',
+                            value: '0'
+                        }
+                    ],
+                    extra: {}
                 }
             ]
         },

@@ -130,7 +130,8 @@
      * @returns {*}
      */
     function getShareLink() {
-        var link = location.origin + location.pathname;
+        var url = location.href;
+        var link = url.substr(0, url.indexOf('.html') + 5);
         if (mobile) {
             link += '?r=' + encodeURIComponent(util.base64Encode(mobile));
         }
