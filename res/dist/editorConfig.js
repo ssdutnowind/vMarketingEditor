@@ -171,7 +171,7 @@ var EDITOR_CONFIG = {
                 {
                     itemId: 'i04',
                     itemLabel: '领取按钮标题（客户端）',
-                    itemDesc: '分享到社交平台的摘要内容',
+                    itemDesc: '客户端内领取按钮的文本',
                     type: 'String',
                     exports: 'appGiftButtonTitle',
                     default: '领取新人礼包',
@@ -183,7 +183,7 @@ var EDITOR_CONFIG = {
                 {
                     itemId: 'i05',
                     itemLabel: '查看礼包按钮标题',
-                    itemDesc: '二维码下方的提示文本',
+                    itemDesc: '客户端内查看礼包按钮的文本',
                     type: 'String',
                     exports: 'appShowGiftButtonTitle',
                     default: '查看礼包',

@@ -107,33 +107,86 @@ $(function () {
             });
     }
 
-    function listFiles(path, list){
-        FS.listFolder(fs.root, path, function(entrys){
-            for(var i = 0; i < entrys.length ;i++){
-                if(entrys[i].isDirectory === true){
-                    entrys[i].files = [];
-                    listFiles(entrys[i].fullPath, entrys[i].files);
-                }
+    /**
+     * 递归遍历
+     * @param path
+     * @param list
+     */
+    function listFiles(path, list) {
+        FS.listFolder(fs.root, path, function (entrys) {
+                for (var i = 0; i < entrys.length; i++) {
+                    if (entrys[i].isDirectory === true) {
+                        entrys[i].files = [];
+                        listFiles(entrys[i].fullPath, entrys[i].files);
+                    }
 
-                list.push(entrys[i]);
-            }
-            console.log(fileList);
-        },
-        function(e){
-            Util.hideProgress();
-            Util.showAlert('遍历工作目录失败：' + (e.message || '（未知错误）'));
-        });
+                    list.push(entrys[i]);
+                }
+            },
+            function (e) {
+                Util.hideProgress();
+                Util.showAlert('遍历工作目录失败：' + (e.message || '（未知错误）'));
+            });
     }
 
     var fileList = [];
+
     /**
      * 遍历文件系统
      */
-    function doListFiles(){
+    function doListFiles() {
         Util.showProgress(100, '正在遍历工作目录……');
         var path = '';
         fileList = [];
         listFiles(path, fileList);
+
+        setTimeout(function () {
+            console.log(fileList);
+            var fileTpl = Util.template('<li><a class="<%- color %>" href="<%- href %>" target="_blank"><i class="fa <%- icon %>"></i> <%- name %></a></li>');
+
+            // 生成文件树
+            function buildDom(files, $dom) {
+                var icon = '', color = '', href = '#';
+                var $el = null;
+                for (var i = 0; i < files.length; i++) {
+                    // 每种文件类型不同的颜色、图标
+                    if (files[i].isDirectory) {
+                        icon = 'fa-folder-open-o';
+                        color = 'text-black';
+                        href = '#';
+                    } else {
+                        if (files[i].name.indexOf('.jpg') >= 0 || files[i].name.indexOf('.png') >= 0) {
+                            icon = 'fa-file-image-o';
+                            color = 'text-blue';
+                        } else if (files[i].name.indexOf('.css') >= 0) {
+                            icon = 'fa-file-code-o';
+                            color = 'text-yellow';
+                        } else if (files[i].name.indexOf('.js') >= 0) {
+                            icon = 'fa-file-code-o';
+                            color = 'text-red';
+                        } else if (files[i].name.indexOf('.html') >= 0) {
+                            icon = 'fa-file-code-o';
+                            color = 'text-green';
+                        } else {
+                            icon = 'fa-file-o';
+                            color = 'text-black';
+                        }
+                        // 文件带有超链接
+                        href = files[i].toURL();
+                    }
+                    $el = $(fileTpl({name: files[i].name, icon: icon, color: color, href: href}));
+                    $dom.append($el);
+                    if (files[i].files && files[i].files.length > 0) {
+                        $el = $('<ul class="nav nav-stacked tree"></ul>').appendTo($el);
+                        buildDom(files[i].files, $el);
+                    }
+                }
+            }
+
+            buildDom(fileList, $('#treeRoot').empty());
+
+            Util.hideProgress();
+        }, 3000);
     }
 
     /**

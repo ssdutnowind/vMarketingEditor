@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="res/css/skins/skin-blue.min.css">
     <link rel="stylesheet" href="res/plugins/colorpicker/bootstrap-colorpicker.min.css">
     <style>
+        body, input, select, textarea, .main-header .logo, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            font-family: "微软雅黑", "Microsoft YaHei", "宋体", "SimSun";
+        }
+        
         .nav.nav-stacked.tree {
             padding-left: 20px;
         }
@@ -37,7 +41,7 @@
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="res/dist/img/header.jpg" class="img-circle" alt="User Image">
+                    <img src="res/dist/img/header.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>病毒营销</p>
@@ -67,6 +71,7 @@
                         </div>
                         <div class="box-body">
                             <b>提示：</b>
+
                             <p>该功能一般适用于插件更新之后第一次使用，清理本地已经加载的预览包可以在下次预览时自动从插件重新释放预览包。</p>
                         </div>
                         <div class="box-footer">
@@ -85,7 +90,9 @@
                         </div>
                         <div class="box-body">
                             <b>提示：</b>
+
                             <p>该功能一般适用于使用单独发布的预览包，替换掉插件默认内置的预览包。</p>
+
                             <div class="form-group">
                                 <label for="filePreviewZip">选择预览包（preview.zip）</label>
                                 <input type="file" id="filePreviewZip">
@@ -107,6 +114,7 @@
                         </div>
                         <div class="box-body">
                             <b>提示：</b>
+
                             <p>该功能一般适用于清理手动安装的配置文件，恢复为使用当前版本插件默认的配置文件。</p>
                         </div>
                         <div class="box-footer">
@@ -125,7 +133,9 @@
                         </div>
                         <div class="box-body">
                             <b>提示：</b>
+
                             <p>该功能一般用于更新编辑工具支持的配置项。</p>
+
                             <div class="form-group">
                                 <label for="fileConfigJS">选择配置文件（editorConfig.js）</label>
                                 <input type="file" id="fileConfigJS">
@@ -148,20 +158,14 @@
                         </div>
                         <div class="box-body">
                             <b>提示：</b>
+
                             <p>该功能用于查看当前工作目录下的文件，便于问题定位。</p>
                             <ul class="nav nav-stacked tree" id="treeRoot">
-                                <li><a><i class="fa fa-folder-o"></i> root</a>
-                                    <ul class="nav nav-stacked tree">
-                                        <li><a><i class="fa fa-file-image-o"></i> root11 <button class="btn btn-default btn-xs">打开</button></a></li>
-                                        <li><a><i class="fa fa-file-code-o"></i> root12</a></li>
-                                    </ul>
-                                </li>
-                                <li><a><i class="fa fa-file-code-o"></i> root1</a></li>
                             </ul>
                         </div>
                         <div class="box-footer">
                             <button class="btn btn-default" id="buttonListFiles">
-                                <i class="fa fa-files-o"></i> 遍历文件
+                                <i class="fa fa-files-o"></i> 遍历工作目录
                             </button>
                         </div>
                     </div>
